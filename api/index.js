@@ -4,9 +4,14 @@
 
 const express = require('express');
 
+// Se incluye el body parser para trabajar con todos los datos en JSON
+const bodyParser = require('body-parser');
+
 const config = require('../config.js');
 
 const app = express();
+
+app.use(bodyParser.json());
 
 const user = require('./components/user/network');
 
