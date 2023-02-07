@@ -1,8 +1,8 @@
 // Este archivo es el unico que va a llamar a los datos
 
-const nanoid = require('nanoid');
 
 const TABLA = 'user';
+const nanoid = require('nanoid');
 
 module.exports = function (injectedStore) {
 
