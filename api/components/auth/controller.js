@@ -1,5 +1,6 @@
 
 const TABLA = "auth";
+const auth = require('../../../auth');
 
 module.exports = function (injectedStore) {
 
@@ -7,6 +8,18 @@ module.exports = function (injectedStore) {
     if(!store) {
         store = require('../../../store/dummy');
     }
+
+    async function login(userName, password) {
+        const data = await store.query(TABLA, {userName: userName});
+        if(data.password === password) {
+            //generar token;
+            return auth.sign(data);
+        } else {
+           throw new Error("Información invalida") 
+        }
+
+    }
+
     function upsert(data) {
         const authData = {
             id: data.id,
@@ -21,5 +34,6 @@ module.exports = function (injectedStore) {
     }
     return {
         upsert,
+        login
     }
 };
