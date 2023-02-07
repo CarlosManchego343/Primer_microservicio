@@ -1,8 +1,8 @@
-// Este archivo es el unico que va a llamar a los datos
-
+// Este archivo es el unico que va a trabajar con las bases de datos
 
 const TABLA = 'user';
-const nanoid = require('nanoid');
+const { nanoid } = require('nanoid');
+const auth = require('../auth');
 
 module.exports = function (injectedStore) {
 
@@ -20,15 +20,24 @@ module.exports = function (injectedStore) {
         return store.get(TABLA, id);
     }
 
-    function upsert(body) {
+    async function upsert(body) {
         const user = {
-            name: body.name
-        }
+            name: body.name,
+            userName: body.userName,
+        };
 
         if(body.id) {
             user.id = body.id;
         } else {
             user.id = nanoid();
+        };
+
+        if(body.password || body.userName) {
+            await auth.upsert({
+                id: user.id,
+                userName: user.userName,
+                password: body.password,
+            })
         }
 
         return store.upsert(TABLA, user);
