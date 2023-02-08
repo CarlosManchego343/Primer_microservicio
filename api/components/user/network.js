@@ -2,15 +2,19 @@
 
 const express = require('express');
 
+const secure = require('./secure');
 const response = require('../../../network/response');
 const controller = require('./index');
+
 
 const router = express.Router();
 
 router.get('/', list);
 router.get('/:id', get);
 router.post('/', upsert);
-router.put('/', upsert);
+
+//Ese secure('update') ejecuta el caso update del archivo secure
+router.put('/', secure('update'), upsert);
 
 function list (req, res) {
     const lista = controller.list().then(() => {
