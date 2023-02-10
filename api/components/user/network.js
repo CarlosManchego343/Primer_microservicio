@@ -17,7 +17,7 @@ router.post('/', upsert);
 router.put('/', secure('update'), upsert);
 
 function list (req, res) {
-    const lista = controller.list().then(() => {
+    controller.list().then((lista) => {
         response.success(req, res, lista, 200);
     }).catch((error) => {
         response.error(req, res, error.message, 500);
