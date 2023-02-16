@@ -23,7 +23,7 @@ module.exports = function (injectedStore) {
     async function upsert(body) {
         const user = {
             name: body.name,
-            userName: body.userName,
+            username: body.username,
         };
 
         if(body.id) {
@@ -32,10 +32,10 @@ module.exports = function (injectedStore) {
             user.id = nanoid();
         };
 
-        if(body.password || body.userName) {
+        if(body.password || body.username) {
             await auth.upsert({
                 id: user.id,
-                userName: user.userName,
+                username: user.username,
                 password: body.password,
             })
         }
