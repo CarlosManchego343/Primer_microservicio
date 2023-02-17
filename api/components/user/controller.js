@@ -47,11 +47,29 @@ module.exports = function (injectedStore) {
         return store.remove(TABLA, id);
     }
 
+    function follow(from, to) {
+        return store.upsert(
+            TABLA + '_follow',{
+            user_from: from,
+            user_to: to
+        });
+    }
+
+    function followers(user_from) {
+        return store.query(
+            TABLA + '_follow', {
+                user_from: user_from
+            }
+        )
+    }
+
     return {
         list,
         get,
         upsert,
-        remove
+        remove,
+        follow,
+        followers
     };
 }
 

@@ -9,18 +9,20 @@ function sign(data) {
 }
 
 function verify(token) {  
-    console.log(token);
     return jwt.verify(token, secret);
 }
 
 const check = {
-    own: function(req, owner) {
+    own: function(req, owner) { 
         const decoded = decodeHeader(req);
-        console.log(decoded);
 
         if (decoded.id !== owner) {
             throw error("No puedes hacer eso", 401); 
         }
+    },
+
+    logged: function(req, owner) { 
+        const decoded = decodeHeader(req);
     }
 }
 
@@ -52,5 +54,5 @@ function decodeHeader(req) {
 
 module.exports = {
     sign,
-    check,
+    check, 
 }

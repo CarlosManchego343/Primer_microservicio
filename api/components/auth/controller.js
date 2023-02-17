@@ -16,8 +16,6 @@ module.exports = function (injectedStore) {
 
         return bcrypt.compare(password, data.password).then(
             sonIguales => {
-                console.log({ password });
-                console.log('Esta es la data password', data.password);
                 if (sonIguales === true) {
                     //generar token;
                     return auth.sign({ ...data })
